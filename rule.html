@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ルール</title>
+
+<style>
+
+body{
+    margin: 0 auto;
+    text-align: center;
+    width: 1200px;
+    background-color: black;
+    color: aqua;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+h2{
+    font-size: 50px;
+}
+
+p {
+            display: none; /* すべての段落を初めは非表示にする */
+            cursor: pointer; /* カーソルをポインタに変更してクリッカブルな表示にする */
+        }
+
+#startButton {
+            display: none; /* ゲームスタートボタンも初めは非表示にする */
+        }
+
+</style>
+
+</head>
+<body>
+
+    <h2>ルール</h2>
+    <p>1.全10ラウンド勝負</p>
+    <p>2.1～10の数値から1つを選択し、各ラウンド大きい数値を出したプレイヤーの勝利</p>
+    <p>3.1度選択した数値は２度と使うことができない</p>
+    <p>4.ラウンドを進めていき先に勝ち越したプレイヤーの勝利</p>
+    <p id="finalParagraph">5.または、10が出された時に1(貧民)を出した場合、1を出したプレイヤーがその時点で勝利</p>
+    
+    <a href="index.html">
+        <button id="startButton">ゲームスタート</button>
+    </a>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const paragraphs = $('p');
+            let currentParagraph = 0;
+
+            // 最初の段落を表示
+            paragraphs.eq(currentParagraph).show();
+
+            // 段落クリック時の処理
+            paragraphs.click(function() {
+                currentParagraph++;
+                if (currentParagraph < paragraphs.length) {
+                    paragraphs.eq(currentParagraph).show();
+                } else if (currentParagraph === paragraphs.length) {
+                    // 最後の段落をクリックしたらゲームスタートボタンを表示
+                    $('#startButton').show();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

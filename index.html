@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ゲーム</title>
+    <link rel="stylesheet" href="css\style.css">
+</head>
+<body>
+     
+ <div>
+    <div id="numberSelection">
+        <img class="number-image" src="css\hinmin.jpg" alt="1">
+        <img class="number-image" src="js\2.png" alt="2">
+        <img class="number-image" src="js\3.jpg" alt="3">
+        <img class="number-image" src="js\4.png" alt="4">
+        <img class="number-image" src="js\5.png" alt="5">
+        <img class="number-image" src="js\6.png" alt="6">
+        <img class="number-image" src="js\7.jpg" alt="7">
+        <img class="number-image" src="js\8.png" alt="8">
+        <img class="number-image" src="js\9.jpg" alt="9">
+        <img class="number-image" src="css\king.jpg" alt="10">
+    </div>
+    <p id="kingNumber"></p> <!-- 相手の数字を表示するための要素 -->
+    <p id="result"></p>
+    <p id="score"></p>
+    <button id="playButton">下剋上</button>
+    <button id="reload-button" style="display:none;">リベンジ</button>
+
+ </div>   
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        let userWins = 0;
+        let kingWins = 0;
+        let gamesPlayed = 0;
+        const usedNumbers = new Set();
+        let selectedNumber = null; // nullは何もないことを示すプログラミング単語。0とは異なるものであり、nullを利用することが一般的
+
+        function resetNumberSelection() {
+            $(".number-image").show();// 次のゲーム時にすべての選択肢を表示するもの
+            selectedNumber = null; // 変数であり、前回の選択をリセットし、次のゲーム用に選択できるようにするもの
+        }
+
+        // 上から順にではなく、選択範囲をすべて読み込み後に実行するための関数
+        $(function() {
+            $(".number-image").click(function() {
+                if (selectedNumber !== null) { // !==はノットイコールを示すもの。
+                    $(`[alt="${selectedNumber}"]`).css("border", "none"); // alt=は選択された画像を示すもので、クリックした時に選択されていたら前に選択されていたものの囲いを消す
+                }
+                selectedNumber = $(this).attr("alt"); // 文字列として取得
+                $(this).css("border", "2px solid blue");// 新たに選択したものに青色で色づける
+            });
+
+            $("#playButton").click(function() {
+                if (selectedNumber === null) {
+                    alert("カードを選択してください");
+                    return;
+                }
+
+                if (usedNumbers.has(selectedNumber)) {
+                    alert("すでに使用したためこのカードは使用できません");
+                    return;
+                }
+
+                usedNumbers.add(selectedNumber);
+
+                const kingNumber = Math.floor(Math.random() * 10) + 1;
+
+                if (parseInt(selectedNumber) === 1 && kingNumber === 10) {
+                    userWins++;
+                    $("#result").text("あなたの完全勝利です");
+                    updateScore();
+                    endGame();
+                } else if (parseInt(selectedNumber) === 10 && kingNumber === 1) {
+                    kingWins++;
+                    $("#result").text("王の完全勝利です");
+                    updateScore();
+                    endGame();
+                } else if (parseInt(selectedNumber) > kingNumber) {
+                    userWins++;
+                    $("#result").text("このラウンドあなたの勝ちです");
+                } else if (parseInt(selectedNumber) < kingNumber) {
+                    kingWins++;
+                    $("#result").text("このラウンドあなたの負けです");
+                } else {
+                    $("#result").text("このラウンドは引き分けです");
+                }
+
+                gamesPlayed++;
+                updateScore();
+                resetNumberSelection();
+
+                $("#kingNumber").text(`キングの選択したカード: ${kingNumber}`);
+
+            });
+        });
+
+        // ゲーム終了時に勝ち負けの記載とゲーム終了を示すために画像が表示されないようにする
+
+        function updateScore() {
+            $("#score").text(`ゲーム回数: ${gamesPlayed}, あなたの勝利数: ${userWins}, キングの勝利数: ${kingWins}`);
+
+            if (gamesPlayed === 10) {
+                // ゲーム終了を示す関数
+                endGame();
+
+            }else if (parseInt(selectedNumber) === 1 && kingNumber === 10) {
+                endGame();
+                
+            }else if (parseInt(selectedNumber) === 10 && kingNumber === 1) {
+                endGame();
+            }
+        }
+
+        function endGame() {
+            $("#numberSelection").hide();
+            $("#playButton").hide();
+            $('#reload-button').show();
+        }
+        
+$('#reload-button').click(function() {
+  location.reload();
+});
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ホーム</title>
+    <style>
+     body{
+        margin: 0;
+        padding:0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url("css/hinmin.jpg");
+        background-size: cover; /* 画面にフィットさせるための指定 */
+        background-repeat: no-repeat; /* 背景画像の繰り返しを無効にする */  
+     }
+
+     .toptitle a {
+        text-align: center;
+        font-family:'Londrina Shadow', cursive;
+        color: red; /* タイトルのテキストを白色に設定 */
+        font-size: 90px; /* フォントサイズを調整 */
+        font-weight: 900;
+        text-decoration: none; /* リンクの下線を無効にする */
+        opacity: 0; /* リンクを初めは透明にする */
+     }
+
+    </style>
+</head>
+<body>
+
+    <div class="toptitle">
+        <a href="rule.html">下 剋 上</a>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script>
+         $(document).ready(function() {
+            const float = $(".toptitle a");
+            setTimeout(function() {
+                float.css("opacity", "1"); // 3秒後に表示
+            }, 3000);
+        });
+
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 1280px;
+    background: #170000;
+    color: white;
+    display: flex;
+    text-align: center;/* テキストを中央揃え */
+    align-items: center;/* 子要素を中央揃え(テキストを含まない) */
+    flex-direction: column;/* 積み重なるように配置 */
+}
+
+#numberSelection{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;/* 水平方向に中央揃え */
+    align-items: center;
+}
+
+.number-image{
+    max-width: 100%;
+    width: 100px;
+    height: 100px;
+    height: auto;
+    margin: 5px; /* 画像間の間隔 */
+    cursor: pointer;
+    flex: 0 0 calc(20% - 20px); /* 5枚ずつの2段構成を実現 */
+    transition: transform 0.2s; /* アニメーション用のトランジションを追加 */
+}
+
+.number-image:hover {
+    transform: scale(1.05); /* ホバー時に拡大するアニメーションを追加 */
+}
